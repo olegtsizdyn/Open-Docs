@@ -6,11 +6,13 @@ import * as firebase from 'firebase';
 
 function Home({ setNavToggle }) {
 
+    const dispatch = useDispatch()
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 // eslint-disable-next-line react-hooks/rules-of-hooks
-                useDispatch(setNavToggle(false))
+                dispatch(setNavToggle(false))
             }
         })
     }, [])

@@ -16,11 +16,12 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
     const [isActiveSignIn, setIsActiveSignIn] = useState(false);
     const [isActiveSignUp, setIsActiveSignUp] = useState(false);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                useDispatch(setLoginState(true))
+                dispatch(setLoginState(true))
             }
         });
     }, [])

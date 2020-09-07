@@ -37,6 +37,9 @@ function App({ auth: { isLogin }, setLoginState, setNavToggle }) {
             <Redirect to="/home" />
           </Route>
           <Route path="/home" component={Home} />
+          {!isLogin &&
+            <Redirect to="/home" />
+          }
           <Route path="/documents" component={Documents} />
         </Switch>
       </div>

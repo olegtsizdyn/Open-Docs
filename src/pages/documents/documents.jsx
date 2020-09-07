@@ -19,14 +19,15 @@ function Documents({ setNavToggle }) {
     const [fireBaseLength, setFireBaseLength] = useState();
     const db = firebase.firestore();
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
                 getFireBase()
-                // eslint-disable-next-line react-hooks/rules-of-hooks
-                useDispatch(setNavToggle(false))
+                dispatch(setNavToggle(false))
             } else {
-                // return <Redirect to="/home" />;
+                return <Redirect to="/home" />;
             }
         })
     }, [])
@@ -190,7 +191,7 @@ function Documents({ setNavToggle }) {
                 getFireBase()
             })
     }
-    
+
     return (
         <div className="content">
             <h1>My Documents</h1>

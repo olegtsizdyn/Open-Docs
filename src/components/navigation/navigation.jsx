@@ -9,9 +9,10 @@ import { NavLink } from 'react-router-dom';
 
 function Navigation({ nav, setNavToggle }) {
 
+    const dispatch = useDispatch();
+
     const closeNav = () => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useDispatch(setNavToggle(false))
+        dispatch(setNavToggle(false))
     }
 
     return (
