@@ -213,13 +213,11 @@ function Documents({ setNavToggle }) {
                             </tr>
                         </thead>
 
-                        {/* <Loader /> */}
                         {loaderState
                             ? <tbody><div className="loader">
                                 <img src={Loader} />
-                            </div></tbody>
-                            :
-                            <tbody>
+                              </div></tbody>
+                            : <tbody>
                                 {documentArray.map((item, index) => (
                                     <tr key={index}>
                                         <td>
