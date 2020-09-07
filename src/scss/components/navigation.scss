@@ -1,0 +1,99 @@
+.navigation_wrapper{
+    margin-top: -20px;
+    width: 340px;
+    height: 100%;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    .logo_icon_nav{
+        margin: 37px 0 0 41px;
+        .close_svg{
+            display: none;
+        }
+        .logo_svg{
+            width: 129px;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+    .nav_btn_group{
+        margin-top: 86px;
+        .nav_btn{
+            width: 100%;
+            height: 71px;
+            display: flex;
+            align-items: center;
+            padding: 0 0 0 40px;
+            border-top: 0.5px solid #E8ECF0;
+            border-bottom: 0.5px solid #E8ECF0;
+            text-decoration: none;
+            p{
+                margin-left: 25px;
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 24px;
+                letter-spacing: 0.5px;
+                color: #7E899F;
+            }
+            &:hover{
+                cursor: pointer;
+                svg path{
+                    stroke: #2896CC;
+                }
+            }
+        }
+        .nav_btn_active{
+            width: 100%;
+            height: 71px;
+            display: flex;
+            align-items: center;
+            padding: 0 0 0 40px;
+            border-top: 0.5px solid #E8ECF0;
+            border-bottom: 0.5px solid #E8ECF0;
+            text-decoration: none;
+            p{
+                margin-left: 25px;
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 24px;
+                letter-spacing: 0.5px;
+                color: #272F3B;
+            }
+            svg path{
+                stroke: #2896CC;
+            }
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+
+@media (max-width: 376px) {
+
+    .navigation_wrapper{
+        width: 100vw;
+        height: 100%;
+        position: absolute;
+        left: -999px;
+        z-index: 999;
+        .logo_icon_nav{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 37px 41px 0 41px;
+            .close_svg{
+                display: block;
+                width: 5%;
+                height: 100%;
+            }
+        }
+    }
+
+}

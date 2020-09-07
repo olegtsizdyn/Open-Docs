@@ -1,0 +1,71 @@
+// const customStyles = {
+//     content: {
+//         top: '50%',
+//         left: '50%',
+//         right: 'auto',
+//         bottom: 'auto',
+//         marginRight: '-50%',
+//         transform: 'translate(-50%, -50%)',
+//         width: '600px',
+//         height: '540px',
+//         border: 'none',
+//         padding: '0',
+//         background: '#FFFFFF',
+//         borderRadius: '15px',
+//         display: 'flex',
+//         justifyContent: 'center'
+//     },
+//     overlay: {
+//         backgroundColor: 'rgba(0, 7 ,14, 0.75)'
+//     }
+// };
+
+.modal{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 540px;
+    border: none;
+    padding: 0;
+    background: #FFFFFF;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    outline: none;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 7 ,14, 0.75);
+}
+
+@media (max-width: 376px) {
+
+    .modal{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: auto;
+        bottom: auto;
+        margin-right: -50%;
+        transform: translate(0, 0);
+        width: 100vw;
+        height: 101vh;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        background: #FFFFFF;
+        display: flex;
+        justify-content: center;
+        outline: none;
+    }
+
+}
