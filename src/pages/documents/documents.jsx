@@ -75,7 +75,8 @@ function Documents({ setNavToggle }) {
                 })
                 .then(
                     setFileTitle(''),
-                    getFireBase()
+                    getFireBase(),
+                    setIsActiveCreateFile(false)
                 )
         }
     }
