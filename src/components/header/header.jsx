@@ -78,7 +78,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
 
     const OpenNav = () => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        useDispatch(setNavToggle(true))
+        dispatch(setNavToggle(true))
     }
 
     return (

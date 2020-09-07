@@ -7,6 +7,7 @@ import { ReactComponent as File } from '../../shared/images/svg/file.svg';
 import { ReactComponent as Delete } from '../../shared/images/svg/delete.svg';
 import { ReactComponent as Edit } from '../../shared/images/svg/edit.svg';
 import { ReactComponent as Close } from '../../shared/images/svg/close.svg';
+import Loader from '../../shared/images/svg/loader.svg';
 import { connect, useDispatch } from 'react-redux'
 import { setNavToggle } from '../../store/nav/actions'
 import { Redirect } from 'react-router-dom';
@@ -32,9 +33,11 @@ function Documents({ setNavToggle }) {
         })
     }, [])
 
+    const [loaderState, setLoaderState] = useState(true);
+
     const getFireBase = () => {
         db.collection("documents")
-            .orderBy('id')
+            .orderBy('id', 'desc')
             .get()
             .then(function (querySnapshot) {
                 const newDocumentArray = [];
@@ -44,10 +47,11 @@ function Documents({ setNavToggle }) {
                 });
                 setDocumentArray(newDocumentArray);
                 if (querySnapshot.size !== 0) {
-                    setFireBaseLength(newDocumentArray[newDocumentArray.length - 1].id);
+                    setFireBaseLength(newDocumentArray[0].id);
                 } else {
                     setFireBaseLength('0')
                 }
+                setLoaderState(false)
             })
     }
 
@@ -83,7 +87,7 @@ function Documents({ setNavToggle }) {
 
     const removeAllItemFireBase = () => {
         db.collection('documents')
-            .orderBy('id')
+            .orderBy('id', 'desc')
             .get()
             .then(item => {
                 item.forEach(doc => {
@@ -124,7 +128,7 @@ function Documents({ setNavToggle }) {
 
     const removeItem = (e) => {
         db.collection('documents')
-            .orderBy('id')
+            .orderBy('id', 'desc')
             .get()
             .then(item => {
                 if (item.size === 1) {
@@ -132,17 +136,17 @@ function Documents({ setNavToggle }) {
                         if (+e === doc.data().id) {
                             doc.ref.delete();
                             setContextMenuState(undefined);
+                            getFireBase();
                         }
-                        getFireBase();
                     })
                 } else {
                     item.forEach(doc => {
                         if (+e === doc.data().id) {
                             doc.ref.delete();
                             setContextMenuState(undefined);
+                            getFireBase();
                         }
                     })
-                    getFireBase();
                 }
             })
     }
@@ -162,7 +166,7 @@ function Documents({ setNavToggle }) {
 
     const editItem = (e) => {
         db.collection('documents')
-            .orderBy('id')
+            .orderBy('id', 'desc')
             .get()
             .then(item => {
                 item.forEach(doc => {
@@ -178,7 +182,7 @@ function Documents({ setNavToggle }) {
 
     const saveFile = () => {
         db.collection('documents')
-            .orderBy('id')
+            .orderBy('id', 'desc')
             .get()
             .then(item => {
                 item.forEach(doc => {
@@ -186,10 +190,11 @@ function Documents({ setNavToggle }) {
                         doc.ref.update({ document: editFileTitle });
                         toggleModalEditFile()
                         setEditFileTitle('')
+                        getFireBase()
                     }
                 })
-                getFireBase()
             })
+            .then(getFireBase())
     }
 
     return (
@@ -211,32 +216,40 @@ function Documents({ setNavToggle }) {
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {documentArray.map((item, index) => (
-                                <tr key={index}>
-                                    <td>
-                                        <input type="checkbox" id={item.id} value={item.id} onChange={(e) => addSelectItems(e.target)} />
-                                        <label for={item.id}>
-                                            <File /> {item.document}</label>
-                                    </td>
-                                    <td>{item.lastEdit}</td>
-                                    <td>{item.permission}</td>
-                                    <td>{item.signed}</td>
-                                    <td>{item.size}KB</td>
-                                    <td>
-                                        <div className="dotted_wrapper">
-                                            <div className="dotted" id={index} onClick={(e) => toggleContextMenu(e.target)} style={{ zIndex: `${+contextMenuState === index ? '999' : ''}` }}></div>
-                                            {+contextMenuState === index &&
-                                                <div className="context_menu_active">
-                                                    <p id={item.id} onClick={(e) => removeItem(e.target.id)}><Delete />Delete</p>
-                                                    <p id={item.id} onClick={(e) => editItem(e.target.id)}><Edit />Edit</p>
-                                                </div>
-                                            }
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
+
+                        {/* <Loader /> */}
+                        {loaderState
+                            ? <tbody><div className="loader">
+                                <img src={Loader} />
+                            </div></tbody>
+                            :
+                            <tbody>
+                                {documentArray.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            <input type="checkbox" id={item.id} value={item.id} onChange={(e) => addSelectItems(e.target)} />
+                                            <label for={item.id}>
+                                                <File /> {item.document}</label>
+                                        </td>
+                                        <td>{item.lastEdit}</td>
+                                        <td>{item.permission}</td>
+                                        <td>{item.signed}</td>
+                                        <td>{item.size}KB</td>
+                                        <td>
+                                            <div className="dotted_wrapper">
+                                                <div className="dotted" id={index} onClick={(e) => toggleContextMenu(e.target)} style={{ zIndex: `${+contextMenuState === index ? '999' : ''}` }}></div>
+                                                {+contextMenuState === index &&
+                                                    <div className="context_menu_active">
+                                                        <p id={item.id} onClick={(e) => removeItem(e.target.id)}><Delete />Delete</p>
+                                                        <p id={item.id} onClick={(e) => editItem(e.target.id)}><Edit />Edit</p>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        }
                     </table>
                 </div>
                 <div className="navigation_wrapper_table">

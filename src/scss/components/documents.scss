@@ -116,6 +116,13 @@
                         }
                     }
                 }
+                .loader{
+                    width: 420%;
+                    height: 250px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
                 tbody{
                     tr{
                         height: 75px;
@@ -436,6 +443,14 @@
             margin-top: 10px;
             flex-direction: column-reverse;
             align-items: center;
+            overflow-x: scroll;
+            .table_wrapper{
+                .table{
+                    .loader{
+                        width: 250%;
+                    }
+                } 
+            }
             .navigation_wrapper_table{
                 width: 100%;
                 .drop_file{
