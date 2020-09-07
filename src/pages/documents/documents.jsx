@@ -190,7 +190,7 @@ function Documents({ setNavToggle }) {
                 getFireBase()
             })
     }
-
+    
     return (
         <div className="content">
             <h1>My Documents</h1>
