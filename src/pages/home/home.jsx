@@ -11,7 +11,6 @@ function Home({ setNavToggle }) {
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
-                // eslint-disable-next-line react-hooks/rules-of-hooks
                 dispatch(setNavToggle(false))
             }
         })

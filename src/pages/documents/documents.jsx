@@ -10,7 +10,6 @@ import { ReactComponent as Close } from '../../shared/images/svg/close.svg';
 import Loader from '../../shared/images/svg/loader.svg';
 import { connect, useDispatch } from 'react-redux'
 import { setNavToggle } from '../../store/nav/actions'
-import { Redirect } from 'react-router-dom';
 
 function Documents({ setNavToggle }) {
 
@@ -24,12 +23,8 @@ function Documents({ setNavToggle }) {
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                getFireBase()
-                dispatch(setNavToggle(false))
-            } else {
-                return <Redirect to="/home" />;
-            }
+            getFireBase()
+            dispatch(setNavToggle(false))
         })
     }, [])
 
