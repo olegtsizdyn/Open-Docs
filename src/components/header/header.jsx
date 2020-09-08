@@ -10,6 +10,7 @@ import { connect, useDispatch } from 'react-redux'
 import { setLoginState } from '../../store/auth/actions'
 import { setNavToggle } from '../../store/nav/actions'
 import { NavLink } from 'react-router-dom';
+import { reduxForm, Field } from 'redux-form';
 
 function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
 
@@ -114,7 +115,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
             {/* Sign In */}
             <Modal isOpen={isActiveSignIn} onRequestClose={toggleModalSignIn} className="modal" overlayClassName="overlay">
                 <div className="modal_sign_in_wrapper">
-                    <Close onClick={toggleModalSignIn}/>
+                    <Close onClick={toggleModalSignIn} />
                     <p onClick={toggleModalSignUp}>Create a free account</p>
                     <div className="modal_content">
                         <h1>Sign In below to upload, share, edit and send documents.</h1>
@@ -134,7 +135,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
             {/* Sign Up */}
             <Modal isOpen={isActiveSignUp} onRequestClose={toggleModalSignUp} className="modal" overlayClassName="overlay">
                 <div className="modal_sign_in_wrapper">
-                    <Close onClick={toggleModalSignUp}/>
+                    <Close onClick={toggleModalSignUp} />
                     <div className="modal_content sign_up">
                         <h1>Sign Up below to upload, share, edit and send documents.</h1>
                         <div className="input_wrapper">
@@ -152,6 +153,20 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
         </div>
     );
 }
+
+const SignInForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            
+        </form>
+    )
+}
+
+const SignInContainer = reduxForm({form: "search"}) (SignInForm)
+
+const SignInReduxForm = reduxForm({
+    form: 'search'
+})(SignInForm)
 
 const mapStateToProps = ({ auth, nav }) => {
     return { auth, nav }
