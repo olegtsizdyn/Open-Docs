@@ -42,10 +42,10 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
     const [passwordSignIn, setPasswordSignIn] = useState('');
     const [disableBtn, setDisableBtn] = useState('');
 
-    const signIn = () => {
+    const signIn = (data) => {
         setDisableBtn(true);
 
-        firebase.auth().signInWithEmailAndPassword(emailSignIn, passwordSignIn)
+        firebase.auth().signInWithEmailAndPassword(data.email, data.password)
             .then(() => setEmailSignIn(''))
             .then(() => setPasswordSignIn(''))
             .then(() => setIsActiveSignIn(false))
@@ -80,6 +80,10 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
     const OpenNav = () => {
         dispatch(setNavToggle(true))
     }
+
+    // const qwe = (data) => {
+    //     console.log(data.email);
+    // }
 
     return (
         <div className='header'>
@@ -119,7 +123,8 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
                     <p onClick={toggleModalSignUp}>Create a free account</p>
                     <div className="modal_content">
                         <h1>Sign In below to upload, share, edit and send documents.</h1>
-                        <div className="input_wrapper">
+                        <SignInReduxForm onSubmit={signIn}/>
+                        {/* <div className="input_wrapper">
                             <label>Email Address</label>
                             <input type="email" placeholder="Email Address" value={emailSignIn} onChange={(e) => setEmailSignIn(e.target.value)} />
                         </div>
@@ -127,7 +132,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
                             <span>Password</span>
                             <input type="password" placeholder="Password" value={passwordSignIn} onChange={(e) => setPasswordSignIn(e.target.value)} />
                         </div>
-                        <button className={disableBtn ? "sign_in_btn_disabled" : "sign_in_btn"} disabled={disableBtn} onClick={signIn}>Sign In</button>
+                        <button className={disableBtn ? "sign_in_btn_disabled" : "sign_in_btn"} disabled={disableBtn} onClick={signIn}>Sign In</button> */}
                     </div>
                 </div>
             </Modal>
@@ -157,15 +162,23 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
 const SignInForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            
+            <div className="input_wrapper">
+                <label>Email Address</label>
+                <Field component="input" name="email" type="email" placeholder="Email Address" />
+            </div>
+            <div className="input_wrapper">
+                <span>Password</span>
+                <Field component="input" name="password" type="password" placeholder="Password" />
+            </div>
+            <button>Sign In</button>
         </form>
     )
 }
 
-const SignInContainer = reduxForm({form: "search"}) (SignInForm)
+const SignInContainer = reduxForm({ form: "SignIn" })(SignInForm)
 
 const SignInReduxForm = reduxForm({
-    form: 'search'
+    form: 'SignIn'
 })(SignInForm)
 
 const mapStateToProps = ({ auth, nav }) => {
