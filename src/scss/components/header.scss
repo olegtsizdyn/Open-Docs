@@ -94,6 +94,10 @@
         }
         form{
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
             .input_wrapper{
                 width: 100%;
                 display: flex;
@@ -117,7 +121,7 @@
                     outline: none;
                 }
             }
-            .sign_in_btn{
+            button{
                 margin-top: 45px;
                 width: 170px;
                 height: 55px;

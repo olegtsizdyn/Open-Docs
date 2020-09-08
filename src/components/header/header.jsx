@@ -38,33 +38,14 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
         Modal.setAppElement('body');
     }
 
-    const [emailSignIn, setEmailSignIn] = useState('');
-    const [passwordSignIn, setPasswordSignIn] = useState('');
-    const [disableBtn, setDisableBtn] = useState('');
-
     const signIn = (data) => {
-        setDisableBtn(true);
-
         firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-            .then(() => setEmailSignIn(''))
-            .then(() => setPasswordSignIn(''))
             .then(() => setIsActiveSignIn(false))
-            .then(() => console.dir(firebase.auth().currentUser))
-            .catch(() => setDisableBtn(false));
     }
 
-    const [emailSignUp, setEmailSignUp] = useState('');
-    const [passwordSignUp, setPasswordSignUp] = useState('');
-
-    const signUp = () => {
-        setDisableBtn(true);
-
-        firebase.auth().createUserWithEmailAndPassword(emailSignUp, passwordSignUp)
-            .then(() => setEmailSignUp(''))
-            .then(() => setPasswordSignUp(''))
+    const signUp = (data) => {
+        firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
             .then(() => setIsActiveSignUp(false))
-            .then(() => console.dir(firebase.auth().onAuthStateChanged))
-            .catch(() => setDisableBtn(false));
     }
 
     const logOut = () => {
@@ -74,7 +55,6 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
         }).catch(function (error) {
             console.log('error');
         });
-        setDisableBtn(false)
     }
 
     const OpenNav = () => {
@@ -123,7 +103,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
                     <p onClick={toggleModalSignUp}>Create a free account</p>
                     <div className="modal_content">
                         <h1>Sign In below to upload, share, edit and send documents.</h1>
-                        <SignInReduxForm onSubmit={signIn}/>
+                        <ModalFormRedux onSubmit={signIn}/>
                         {/* <div className="input_wrapper">
                             <label>Email Address</label>
                             <input type="email" placeholder="Email Address" value={emailSignIn} onChange={(e) => setEmailSignIn(e.target.value)} />
@@ -143,7 +123,8 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
                     <Close onClick={toggleModalSignUp} />
                     <div className="modal_content sign_up">
                         <h1>Sign Up below to upload, share, edit and send documents.</h1>
-                        <div className="input_wrapper">
+                        <ModalFormRedux onSubmit={signUp}/>
+                        {/* <div className="input_wrapper">
                             <label>Email Address</label>
                             <input type="email" placeholder="Email Address" value={emailSignUp} onChange={(e) => setEmailSignUp(e.target.value)} />
                         </div>
@@ -151,7 +132,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
                             <span>Password</span>
                             <input type="password" placeholder="Password" value={passwordSignUp} onChange={(e) => setPasswordSignUp(e.target.value)} />
                         </div>
-                        <button className={!disableBtn ? "sign_in_btn" : "sign_in_btn_disabled"} disabled={disableBtn} onClick={signUp}>Sign Up</button>
+                        <button className={!disableBtn ? "sign_in_btn" : "sign_in_btn_disabled"} disabled={disableBtn} onClick={signUp}>Sign Up</button> */}
                     </div>
                 </div>
             </Modal>
@@ -159,7 +140,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
     );
 }
 
-const SignInForm = (props) => {
+const ModalForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div className="input_wrapper">
@@ -170,16 +151,16 @@ const SignInForm = (props) => {
                 <span>Password</span>
                 <Field component="input" name="password" type="password" placeholder="Password" />
             </div>
-            <button>Sign In</button>
+            <button>Submit</button>
         </form>
     )
 }
 
-const SignInContainer = reduxForm({ form: "SignIn" })(SignInForm)
+const ModalFormContainer = reduxForm({ form: "modalForm" })(ModalForm)
 
-const SignInReduxForm = reduxForm({
-    form: 'SignIn'
-})(SignInForm)
+const ModalFormRedux = reduxForm({
+    form: 'modalForm'
+})(ModalForm)
 
 const mapStateToProps = ({ auth, nav }) => {
     return { auth, nav }
