@@ -11,7 +11,7 @@ import { setLoginState } from '../../store/auth/actions'
 import { setNavToggle } from '../../store/nav/actions'
 import { NavLink } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
-import { required } from '../../validators/validator';
+import { required } from '../../common/validators';
 
 function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
 
@@ -99,7 +99,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
                     <p onClick={toggleModalSignUp}>Create a free account</p>
                     <div className="modal_content">
                         <h1>Sign In below to upload, share, edit and send documents.</h1>
-                        <ModalFormRedux onSubmit={signIn}/>
+                        <ModalFormRedux onSubmit={signIn} />
                     </div>
                 </div>
             </Modal>
@@ -110,7 +110,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
                     <Close onClick={toggleModalSignUp} />
                     <div className="modal_content sign_up">
                         <h1>Sign Up below to upload, share, edit and send documents.</h1>
-                        <ModalFormRedux onSubmit={signUp}/>
+                        <ModalFormRedux onSubmit={signUp} />
                     </div>
                 </div>
             </Modal>
@@ -122,12 +122,10 @@ const ModalForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div className="input_wrapper">
-                <label>Email Address</label>
-                <Field component="input" name="email" type="email" placeholder="Email Address" validate={required} />
+                <Field name="email" type="email" component={renderField} label="Email Address" placeholder="Email Address" validate={required} />
             </div>
             <div className="input_wrapper">
-                <label>Password</label>
-                <Field component="input" name="password" type="password" placeholder="Password" />
+                <Field name="password" type="password" component={renderField} label="Password" placeholder="Password" validate={required} />
             </div>
             <button>Submit</button>
         </form>
@@ -139,6 +137,21 @@ const ModalFormContainer = reduxForm({ form: "modalForm" })(ModalForm)
 const ModalFormRedux = reduxForm({
     form: 'modalForm'
 })(ModalForm)
+
+const renderField = ({
+    input,
+    label,
+    type,
+    placeholder,
+    meta: { touched }
+    }) => (
+            <div>
+                <label>{label}</label>
+                <div>
+                    <input {...input} placeholder={placeholder} type={type} className={touched && !input.value ? "error_input" : ""} />
+                </div>
+            </div>
+        )
 
 const mapStateToProps = ({ auth, nav }) => {
     return { auth, nav }

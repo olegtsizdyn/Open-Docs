@@ -1,7 +1,7 @@
 export const required = value => {
     if (value) {
-        console.log(value);
+        return undefined;
     } else {
-        console.log(value);
+        return "Required";
     }
 }
