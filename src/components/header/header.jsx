@@ -11,6 +11,7 @@ import { setLoginState } from '../../store/auth/actions'
 import { setNavToggle } from '../../store/nav/actions'
 import { NavLink } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
+import { required } from '../../validators/validator';
 
 function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
 
@@ -122,7 +123,7 @@ const ModalForm = (props) => {
         <form onSubmit={props.handleSubmit}>
             <div className="input_wrapper">
                 <label>Email Address</label>
-                <Field component="input" name="email" type="email" placeholder="Email Address" />
+                <Field component="input" name="email" type="email" placeholder="Email Address" validate={required} />
             </div>
             <div className="input_wrapper">
                 <label>Password</label>
