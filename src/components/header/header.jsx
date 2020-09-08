@@ -50,8 +50,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
 
     const logOut = () => {
         firebase.auth().signOut().then(function () {
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            useDispatch(setLoginState(false))
+            dispatch(setLoginState(false))
         }).catch(function (error) {
             console.log('error');
         });
@@ -60,10 +59,6 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
     const OpenNav = () => {
         dispatch(setNavToggle(true))
     }
-
-    // const qwe = (data) => {
-    //     console.log(data.email);
-    // }
 
     return (
         <div className='header'>
@@ -96,7 +91,7 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
                 </ul>
             </div>
 
-            {/* Sign In */}
+            {/* Sign In Modal */}
             <Modal isOpen={isActiveSignIn} onRequestClose={toggleModalSignIn} className="modal" overlayClassName="overlay">
                 <div className="modal_sign_in_wrapper">
                     <Close onClick={toggleModalSignIn} />
@@ -104,35 +99,17 @@ function Header({ auth: { isLogin }, setLoginState, setNavToggle }) {
                     <div className="modal_content">
                         <h1>Sign In below to upload, share, edit and send documents.</h1>
                         <ModalFormRedux onSubmit={signIn}/>
-                        {/* <div className="input_wrapper">
-                            <label>Email Address</label>
-                            <input type="email" placeholder="Email Address" value={emailSignIn} onChange={(e) => setEmailSignIn(e.target.value)} />
-                        </div>
-                        <div className="input_wrapper">
-                            <span>Password</span>
-                            <input type="password" placeholder="Password" value={passwordSignIn} onChange={(e) => setPasswordSignIn(e.target.value)} />
-                        </div>
-                        <button className={disableBtn ? "sign_in_btn_disabled" : "sign_in_btn"} disabled={disableBtn} onClick={signIn}>Sign In</button> */}
                     </div>
                 </div>
             </Modal>
 
-            {/* Sign Up */}
+            {/* Sign Up Modal */}
             <Modal isOpen={isActiveSignUp} onRequestClose={toggleModalSignUp} className="modal" overlayClassName="overlay">
                 <div className="modal_sign_in_wrapper">
                     <Close onClick={toggleModalSignUp} />
                     <div className="modal_content sign_up">
                         <h1>Sign Up below to upload, share, edit and send documents.</h1>
                         <ModalFormRedux onSubmit={signUp}/>
-                        {/* <div className="input_wrapper">
-                            <label>Email Address</label>
-                            <input type="email" placeholder="Email Address" value={emailSignUp} onChange={(e) => setEmailSignUp(e.target.value)} />
-                        </div>
-                        <div className="input_wrapper">
-                            <span>Password</span>
-                            <input type="password" placeholder="Password" value={passwordSignUp} onChange={(e) => setPasswordSignUp(e.target.value)} />
-                        </div>
-                        <button className={!disableBtn ? "sign_in_btn" : "sign_in_btn_disabled"} disabled={disableBtn} onClick={signUp}>Sign Up</button> */}
                     </div>
                 </div>
             </Modal>
@@ -148,7 +125,7 @@ const ModalForm = (props) => {
                 <Field component="input" name="email" type="email" placeholder="Email Address" />
             </div>
             <div className="input_wrapper">
-                <span>Password</span>
+                <label>Password</label>
                 <Field component="input" name="password" type="password" placeholder="Password" />
             </div>
             <button>Submit</button>
