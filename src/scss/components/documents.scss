@@ -363,7 +363,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     svg{
         width: 5%;
         float: right;
@@ -380,56 +380,80 @@
         letter-spacing: 0.6px;
         color: #272F3B;
     }
+    form{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     .input_wrapper{
         width: 100%;
         margin-top: 26px;
-        label{
-            font-family: Open Sans;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 13px;
-            line-height: 23px;
-            letter-spacing: 0.5px;
-            color: #272F3B;
+            label{
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 13px;
+                line-height: 23px;
+                letter-spacing: 0.5px;
+                color: #272F3B;
+            }
+            input{
+                width: 100%;
+                height: 55px;
+                background: #FFFFFF;
+                border: 1px solid #D1D5DE;
+                border-radius: 12px;
+                margin-top: 8px;
+                padding: 16px 20px;
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 23px;
+                letter-spacing: 0.5px;
+                color: #66728A;
+                outline: none;
+            }
+            .error_input{
+                width: 100%;
+                height: 55px;
+                background: #FFFFFF;
+                border: 1px solid red;
+                border-radius: 12px;
+                margin-top: 8px;
+                padding: 16px 20px;
+                font-family: Open Sans;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 23px;
+                letter-spacing: 0.5px;
+                color: #66728A;
+                outline: none;
+            }
         }
-        input{
-            width: 100%;
+        button{
+            margin-top: 190px;
+            width: 170px;
             height: 55px;
-            background: #FFFFFF;
-            border: 1px solid #D1D5DE;
+            background: #2896CC;
             border-radius: 12px;
-            margin-top: 8px;
-            padding: 16px 20px;
+            outline: none;
+            border: none;
             font-family: Open Sans;
             font-style: normal;
-            font-weight: normal;
+            font-weight: bold;
             font-size: 13px;
             line-height: 23px;
+            text-align: center;
             letter-spacing: 0.5px;
-            color: #66728A;
-            outline: none;
+            color: #FFFFFF;
+            &:hover{
+                cursor: pointer;
+            }
         }
     }
-    .create_file_btn{
-        margin-top: 190px;
-        width: 170px;
-        height: 55px;
-        background: #2896CC;
-        border-radius: 12px;
-        outline: none;
-        border: none;
-        font-family: Open Sans;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 13px;
-        line-height: 23px;
-        text-align: center;
-        letter-spacing: 0.5px;
-        color: #FFFFFF;
-        &:hover{
-            cursor: pointer;
-        }
-    }
+    
 }
 
 

@@ -10,7 +10,8 @@ import { ReactComponent as Close } from '../../shared/images/svg/close.svg';
 import Loader from '../../shared/images/svg/loader.svg';
 import { connect, useDispatch } from 'react-redux'
 import { setNavToggle } from '../../store/nav/actions'
-import { Redirect } from 'react-router-dom';
+import { reduxForm, Field } from 'redux-form';
+import { required } from '../../common/validators';
 
 function Documents({ setNavToggle }) {
 
@@ -61,25 +62,20 @@ function Documents({ setNavToggle }) {
         Modal.setAppElement('body');
     }
 
-    const [fileTitle, setFileTitle] = useState('');
-
-    const addFile = () => {
-        if (fileTitle) {
+    const addFile = (data) => {
             db.collection("documents")
                 .add({
                     id: +fireBaseLength + 1,
-                    document: fileTitle,
+                    document: data.fileName,
                     lastEdit: "not edited",
                     permission: '-',
                     signed: 'Only you',
                     size: '18'
                 })
                 .then(
-                    setFileTitle(''),
                     getFireBase(),
                     setIsActiveCreateFile(false)
                 )
-        }
     }
 
     const removeAllItemFireBase = () => {
@@ -268,11 +264,7 @@ function Documents({ setNavToggle }) {
                         <Close onClick={toggleModalCreateFile} />
                     </div>
                     <h1>Create new file</h1>
-                    <div className="input_wrapper">
-                        <label>Title</label>
-                        <input type="text" placeholder="Title" value={fileTitle} onChange={(e) => setFileTitle(e.target.value)} />
-                    </div>
-                    <button className="create_file_btn" onClick={addFile}>Create file</button>
+                    <ModalFormRedux onSubmit={addFile} />
                 </div>
             </Modal>
 
@@ -293,6 +285,38 @@ function Documents({ setNavToggle }) {
         </div>
     );
 }
+
+const ModalForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div className="input_wrapper">
+                <Field name="fileName" type="text" component={renderField} label="Title" placeholder="Title" validate={required} />
+            </div>
+            <button>Submit</button>
+        </form>
+    )
+}
+
+const ModalFormContainer = reduxForm({ form: "modalForm" })(ModalForm)
+
+const ModalFormRedux = reduxForm({
+    form: 'modalForm'
+})(ModalForm)
+
+const renderField = ({
+    input,
+    label,
+    type,
+    placeholder,
+    meta: { touched }
+    }) => (
+            <div>
+                <label>{label}</label>
+                <div>
+                    <input {...input} placeholder={placeholder} type={type} className={touched && !input.value ? "error_input" : ""} />
+                </div>
+            </div>
+        )
 
 const mapStateToProps = ({ nav }) => {
     return { nav }
