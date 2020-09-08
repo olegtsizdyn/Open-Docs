@@ -63,19 +63,19 @@ function Documents({ setNavToggle }) {
     }
 
     const addFile = (data) => {
-            db.collection("documents")
-                .add({
-                    id: +fireBaseLength + 1,
-                    document: data.fileName,
-                    lastEdit: "not edited",
-                    permission: '-',
-                    signed: 'Only you',
-                    size: '18'
-                })
-                .then(
-                    getFireBase(),
-                    setIsActiveCreateFile(false)
-                )
+        db.collection("documents")
+            .add({
+                id: +fireBaseLength + 1,
+                document: data.fileName,
+                lastEdit: "not edited",
+                permission: '-',
+                signed: 'Only you',
+                size: '18'
+            })
+            .then(
+                getFireBase(),
+                setIsActiveCreateFile(false)
+            )
     }
 
     const removeAllItemFireBase = () => {
@@ -213,7 +213,7 @@ function Documents({ setNavToggle }) {
                         {loaderState
                             ? <tbody><div className="loader">
                                 <img src={Loader} />
-                              </div></tbody>
+                            </div></tbody>
                             : <tbody>
                                 {documentArray.map((item, index) => (
                                     <tr key={index}>
@@ -275,11 +275,13 @@ function Documents({ setNavToggle }) {
                         <Close onClick={toggleModalEditFile} />
                     </div>
                     <h1>Edit file</h1>
-                    <div className="input_wrapper">
-                        <label>Title</label>
-                        <input type="text" placeholder="Title" value={editFileTitle} onChange={(e) => setEditFileTitle(e.target.value)} />
-                    </div>
-                    <button className="create_file_btn" onClick={saveFile}>Save</button>
+                    <form>
+                        <div className="input_wrapper">
+                            <label>Title</label>
+                            <input type="text" placeholder="Title" value={editFileTitle} onChange={(e) => setEditFileTitle(e.target.value)} />
+                        </div>
+                        <button className="create_file_btn" onClick={saveFile}>Save</button>
+                    </form>
                 </div>
             </Modal>
         </div>
@@ -309,14 +311,14 @@ const renderField = ({
     type,
     placeholder,
     meta: { touched }
-    }) => (
+}) => (
+        <div>
+            <label>{label}</label>
             <div>
-                <label>{label}</label>
-                <div>
-                    <input {...input} placeholder={placeholder} type={type} className={touched && !input.value ? "error_input" : ""} />
-                </div>
+                <input {...input} placeholder={placeholder} type={type} className={touched && !input.value ? "error_input" : ""} />
             </div>
-        )
+        </div>
+    )
 
 const mapStateToProps = ({ nav }) => {
     return { nav }
