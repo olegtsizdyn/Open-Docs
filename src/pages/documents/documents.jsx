@@ -63,6 +63,7 @@ function Documents({ setNavToggle }) {
     }
 
     const addFile = (data) => {
+        setLoaderState(true);
         db.collection("documents")
             .add({
                 id: +fireBaseLength + 1,
@@ -74,7 +75,8 @@ function Documents({ setNavToggle }) {
             })
             .then(
                 getFireBase(),
-                setIsActiveCreateFile(false)
+                setIsActiveCreateFile(false),
+                setLoaderState(false)
             )
     }
 
@@ -120,6 +122,7 @@ function Documents({ setNavToggle }) {
     }
 
     const removeItem = (e) => {
+        setLoaderState(true)
         db.collection('documents')
             .orderBy('id', 'desc')
             .get()
@@ -130,6 +133,7 @@ function Documents({ setNavToggle }) {
                             doc.ref.delete();
                             setContextMenuState(undefined);
                             getFireBase();
+                            setLoaderState(false)
                         }
                     })
                 } else {
@@ -138,6 +142,7 @@ function Documents({ setNavToggle }) {
                             doc.ref.delete();
                             setContextMenuState(undefined);
                             getFireBase();
+                            setLoaderState(false)
                         }
                     })
                 }
@@ -174,6 +179,7 @@ function Documents({ setNavToggle }) {
     }
 
     const saveFile = () => {
+        setLoaderState(true)
         db.collection('documents')
             .orderBy('id', 'desc')
             .get()
@@ -187,7 +193,9 @@ function Documents({ setNavToggle }) {
                     }
                 })
             })
-            .then(getFireBase())
+            .then(
+                getFireBase(),
+            )
     }
 
     return (
@@ -211,9 +219,11 @@ function Documents({ setNavToggle }) {
                         </thead>
 
                         {loaderState
-                            ? <tbody><div className="loader">
-                                <img src={Loader} />
-                            </div></tbody>
+                            ? <tbody>
+                                <div className="loader">
+                                    <img src={Loader} />
+                                </div>
+                              </tbody>
                             : <tbody>
                                 {documentArray.map((item, index) => (
                                     <tr key={index}>
@@ -275,13 +285,11 @@ function Documents({ setNavToggle }) {
                         <Close onClick={toggleModalEditFile} />
                     </div>
                     <h1>Edit file</h1>
-                    <form>
-                        <div className="input_wrapper">
-                            <label>Title</label>
-                            <input type="text" placeholder="Title" value={editFileTitle} onChange={(e) => setEditFileTitle(e.target.value)} />
-                        </div>
-                        <button className="create_file_btn" onClick={saveFile}>Save</button>
-                    </form>
+                    <div className="input_wrapper">
+                        <label>Title</label>
+                        <input type="text" placeholder="Title" value={editFileTitle} onChange={(e) => setEditFileTitle(e.target.value)} />
+                    </div>
+                    <button className="create_file_btn" onClick={saveFile}>Save</button>
                 </div>
             </Modal>
         </div>
